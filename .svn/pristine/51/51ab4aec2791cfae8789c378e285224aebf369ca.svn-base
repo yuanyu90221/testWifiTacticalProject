@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title data-i18n="app.name"></title>
+		<link rel="stylesheet" href="/css/normalize.css"/>
+		<link rel="stylesheet" href="/css/main.css"/>
+		<link rel="stylesheet" href="/css/redmond/jquery-ui-1.10.4.custom.min.css"/>
+		<link rel="stylesheet" href="/css/fontello.css">
+		<link rel="stylesheet" href="/css/animation.css">
+		<link rel="stylesheet" href="/css/jquery.fancybox.css">
+		<!--[if IE 7]><link rel="stylesheet" href="/css/fontello-ie7.css"><![endif]-->
+	</head>
+	<body>
+		<div class="wrapper">
+			<%- include ../template/header %>
+			<div class="fix-content">
+				<div class="lb">
+					<%- include ../template/function-tabs %>
+				</div>
+				<div class="rb">
+					<div class="main-wrap">
+						<div id="messaging" class="main">
+							<div class="hd">
+								<div class="hd-title">
+									<h4 data-i18n="fn.app_communication_record"></h4>
+								</div>
+							</div>
+							<div class="bd">
+								<div class="tool-bar">
+									<div class="tool">
+										<span data-i18n="messaging.search_form_label_target"></span>
+										<select id="target"></select>
+									</div>
+									<div class="tool">
+										<span data-i18n="messaging.search_form_label_app"></span>
+										<select id="app"></select>
+									</div>
+									<div class="tool">
+										<a id="btn_search" href="javascript:;" class="btn" data-i18n="btn.search"></a>
+									</div>
+								</div>
+								<div class="sub-main-wrap m-t-60 scrollable">
+									<div class="card chatlist-card">
+										<div class="card-hd">
+											<h4 data-i18n="messaging.chatlist_card_title"></h4>
+										</div>
+										<div class="card-bd chatlist"></div>
+									</div>
+									<div class="card chat-card">
+										<div class="card-hd">
+											<h4 data-i18n="messaging.chat_card_title"></h4>
+										</div>
+										<div class="card-bd chatroom">
+											<div class="load-more">
+												<a id="load_more" href="javascript:;" data-i18n="messaging.chat_card_load_more"></a>
+											</div>
+										</div>
+									</div>
+								</div>
+								<a href="javascript:;" class="go-top"><i class="icon-up-open-1"></i> Top</a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<%- include ../template/footer %>
+		</div>
+		<script type="text/template" id="tpl_chat_chatitem">
+			<div class="chatitem">
+				<input type="hidden" value="{%= chatId %}" />
+				<a href="javascript:;">
+				{% if(!!chatName) { %}
+				{%= chatName %}
+				{% } else { %}
+				<span data-i18n="messaging.unknown_party"></span>
+				{% } %}
+				</a>
+			</div>
+		</script>
+		<script type="text/template" id="tpl_chat_message">
+			<div class="talk {% if(!!from_mid) { %}party-talk{% } else { %}target-talk{% } %}">
+				<div class="talker">{% if(party_name) { %}{%= party_name %}{% } else { %}{%= target_name %}{% } %}</div>
+				<div class="talk-card">
+					<div class="talk-msg-wrap">
+						<div class="talk-msg">
+						{% if(media_type == 0) { %}
+							<span>{%= content %}</span>
+						{% } else { %}
+							{% if(media_type == 1) { %}
+								{% if(!!media_b_path && !!media_s_path) { %}
+							<a href="/monitor/messaging/file?f={%= media_b_path %}" class="show_img" >
+								<img src="/monitor/messaging/file?f={%= media_s_path %}" />
+							</a>
+								{% } else if(!!media_b_path) { %}
+							<a href="/monitor/messaging/file?f={%= media_b_path %}" class="show_img" data-i18n="messaging.chat_msg_show_img"></a>
+								{% } else if(!!media_s_path) { %}
+							<img src="/monitor/messaging/file?f={%= media_s_path %}" />
+								{% } else { %}
+							<span data-i18n="messaging.chat_msg_missing_file"></span>
+								{% } %}
+							{% } else if(media_type == 7) { %}
+							<span data-i18n="messaging.chat_msg_sticker"></span>
+							{% } else { %}
+								{% if(!!media_b_path) { %}
+							<a href="/monitor/messaging/file?f={%= media_b_path %}" >{%= media_b_path %}</a>
+								{% } else { %}
+							<span data-i18n="messaging.chat_msg_missing_file"></span>
+								{% } %}
+							{% } %}
+						{% } %}
+						</div>
+					</div>
+					<div class="talk-time-wrap">
+						<div class="talk-time">
+							<input type="hidden" value="{%= send_time %}" />
+							<h6>{%= $.formatDateTime(new Date(parseInt(send_time, 10)), 'yyyy-MM-dd HH:mm:ss') %}</h6>
+						</div>
+					</div>
+				</div>
+			</div>
+		</script>
+		<%- include ../template/script %>
+	</body>
+</html>

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title data-i18n="app.name"></title>
+		<link rel="stylesheet" href="/css/normalize.css"/>
+		<link rel="stylesheet" href="/css/main.css"/>
+	</head>
+	<body>
+		<div class="wrapper">
+			<header class="non-b"></header>
+			<div class="content">
+				<div class="signup-card">
+					<div class="title">
+						<h3 data-i18n="signup.title"></h3>
+					</div>
+					<form action="/signup" method="post">
+						<input id="account" name="account" type="text"  value="<%= account %>" data-i18n="[placeholder]signup.form_label_email" />
+						<input id="passwd" name="passwd" type="password" data-i18n="[placeholder]signup.form_label_password" />
+						<input id="name" name="name" type="text"  value="<%= name %>" data-i18n="[placeholder]signup.form_label_full_name" />
+						<% if(typeof errMsg !== 'undefined' && errMsg != '') { %>
+						<span class="err-msg"><%= errMsg %></span>
+						<% } %>
+						<input type="submit" class="btn btn-submit" data-i18n="[value]btn.signup" />
+					</form>
+				</div>
+				<div id="content-switch">
+					<p>
+						<a href="/login" data-i18n="signup.login"></a>
+					</p>
+				</div>
+			</div>
+			<%- include ../template/footer %>
+		</div>
+		<!--[if lt IE 9]>       <script type="text/javascript" src="/js/libs/jquery/jquery-1.10.2.js"></script> <![endif]-->
+		<!--[if gte IE 9]><!--> <script type="text/javascript" src="/js/libs/jquery/jquery-2.0.3.js"></script> <!--<![endif]-->
+		<script type="text/javascript" src="/js/libs/jquery/plugin/i18next-1.7.7.min.js"></script>
+		<script type="text/javascript">
+		$(document).ready(function() {
+			var options = {
+				detectLngQS: 'lang',
+				cookieName: 'lang',
+				ns: { namespaces: ['translation'], defaultNs: 'translation'},
+				resGetPath: '/locales/resources.json?lng=__lng__&ns=__ns__',
+				dynamicLoad: true,
+				sendMissing: true,
+				useLocalStorage: false,
+				sendMissingTo: 'current'
+			};
+			$.i18n.init(options, function() {
+				$('html').i18n();
+			});
+		});
+		</script>
+	</body>
+</html>

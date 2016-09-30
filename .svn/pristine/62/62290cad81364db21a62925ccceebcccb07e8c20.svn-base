@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title data-i18n="app.name"></title>
+		<link rel="stylesheet" href="/css/normalize.css"/>
+		<link rel="stylesheet" href="/css/main.css"/>
+		<link rel="stylesheet" href="/css/redmond/jquery-ui-1.10.4.custom.min.css"/>
+		<link rel="stylesheet" href="/css/fontello.css">
+		<link rel="stylesheet" href="/css/animation.css">
+		<!--[if IE 7]><link rel="stylesheet" href="/css/fontello-ie7.css"><![endif]-->
+	</head>
+	<body>
+		<div class="wrapper">
+			<%- include ../template/header2 %>
+			<div class="fix-content">
+					<div class="main-wrap">
+						<div id="targetSummaryPkt" class="main">
+							<div class="hd">
+								<div class="hd-title">
+									<h4 data-i18n="fn.packet_summary"></h4> 
+									<h5>
+										<%= ipv4 %>
+										<input id="ipv4" type="hidden" value="<%= ipv4 %>" />
+									</h5>
+								</div>
+							</div>
+							<div class="bd scrollable">
+								<div class="tool-bar">
+									<div class="tool-r">
+										<div id="types_btn_gp" class="btn-group"></div>
+									</div>
+								</div>
+								<div id="data_sq" class="sub-bd"></div>
+							</div>
+						</div>
+					</div>
+			</div>
+			<%- include ../template/footer %>
+		</div>
+		<script type="text/template" id="tpl_data_card_item">
+			<div class="b-a b-r-t-6 item-card-wrap itemCard_{%=type%}">
+				<div class="item-card">
+					<div class="hd b-r-t-6">
+						<div class="hd-title">
+							<h4>{%= typeName %}</h4>
+						</div>
+					</div>
+					<div class="bd b-r-b-6 scrollable bgw">
+						<div class="grid non-mw">
+							{% _.each(data, function(d) { %}
+							<div class="col-1-3 b-b">
+								<div class="item-data">{%= d.mac %}</div>
+							</div>
+							<div class="col-1-3 b-b">
+								<div class="item-data">{%= $.formatDateTime(new Date(parseInt(d.timestamp, 10)), 'yyyy-MM-dd HH:mm:ss') %}</div>
+							</div>
+							<div class="col-1-3 b-b">
+								<div class="item-data">{%= d.data %}</div>
+							</div>
+							{% }) %}
+						</div>
+					</div>
+				</div>
+			</div>
+		</script>
+		<script type="text/template" id="tpl_data_card">
+			<div class="card m-15">
+				<div class="card-hd">
+					<h4>{%= ipv4 %}</h4>
+				</div>
+				<div class="card-bd non-p p-t-40">
+					<ul class="list"></ul>
+				</div>
+			</div>
+		</script>
+		<script type="text/template" id="tpl_dialog_confirm_form">
+			<div class="dl">
+				<div class="grid grid-pd-top non-mw">
+					<div class="col-1-1 ta-c">{%= message %}</div>
+				</div>
+				<div class="grid grid-pd-top non-mw">
+					<div class="col-1-2 ta-c">
+						<a id="btn_cancel" href="javascript:;" class="btn" data-i18n="btn.cancel"></a>
+					</div>
+					<div class="col-1-2 ta-c">
+						<a id="btn_submit" href="javascript:;" class="btn btn-ok" data-i18n="btn.ok"></a>
+					</div>
+				</div>
+			</div>
+		</script>
+		<%- include ../template/script %>
+	</body>
+</html>

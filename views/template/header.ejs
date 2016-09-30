@@ -1,0 +1,80 @@
+<header>
+	<div class="logo-wrap navbar-left">
+		<div class="logo">logo</div>
+	</div>
+	<ul id="navigation" class="nav navbar-nav navbar-right">
+		<li>
+			<div class="navbar-item">
+				<select id="setLang">
+					<option value="en-US">English</option>
+					<option value="zh-TW">繁體中文</option>
+				</select>
+			</div>
+		</li>
+		<li>
+			<a id="gear" href="javascript:;">
+				<span id="show_name"><%= session.user.username %></span>
+				<i class="icon-down-dir"></i>
+			</a>
+			<div class="gear-menu" style="display: none;">
+				<ul>
+					<li>
+						<a id="btn_account_setting" href="javascript:;" data-i18n="tpl.header.account_setting"></a>
+					</li>
+					<li>
+						<a href="/logout" data-i18n="tpl.header.logout"></a>
+					</li>
+				</ul>
+			</div>
+		</li>
+	</ul>
+</header>
+<script type="text/template" id="tpl_dialog_account_form">
+	<div class="dl">
+		<form id="user_form">
+			<div class="grid grid-pd-top non-mw">
+				<div class="col-1-5">
+					<span class="field-name pull-right" data-i18n="user_privilege.account"></span>
+				</div>
+				<div class="col-8-10">
+					<span class="field-value">{%= username %}</span>
+					<input type="hidden" name="_id" value="{%= _id %}" />
+					<input type="hidden" name="username" value="{%= username %}" />
+				</div>
+			</div>
+			<div class="grid grid-pd-top non-mw">
+				<div class="col-1-5">
+					<span class="field-name pull-right" data-i18n="user_privilege.password"></span>
+				</div>
+				<div class="col-8-10">
+					<input type="password" name="password" />
+				</div>
+			</div>
+			<div class="grid grid-pd-top non-mw">
+				<div class="col-1-5">
+					<span class="field-name pull-right" data-i18n="user_privilege.name"></span>
+				</div>
+				<div class="col-8-10">
+					<input type="text" name="name" value="{%= name %}" />
+				</div>
+			</div>
+			<div class="grid grid-pd-top non-mw">
+				<div class="col-1-5">
+					<span class="field-name pull-right" data-i18n="user_privilege.role"></span>
+				</div>
+				<div class="col-8-10">
+					<span class="field-value" data-i18n="{%= role.name %}"></span>
+					<input type="hidden" name="role_key" value="{%= role_key %}" />
+				</div>
+			</div>
+			<div class="grid grid-pd-top non-mw">
+				<div class="col-1-2 ta-c">
+					<a id="btn_cancel" href="javascript:;" class="btn" data-i18n="btn.cancel"></a>
+				</div>
+				<div class="col-1-2 ta-c">
+					<a id="btn_submit" href="javascript:;" class="btn btn-ok" data-i18n="btn.ok"></a>
+				</div>
+			</div>
+		</form>
+	</div>
+</script>

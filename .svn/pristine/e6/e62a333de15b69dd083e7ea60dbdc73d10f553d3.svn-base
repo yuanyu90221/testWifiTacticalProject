@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title data-i18n="app.name"></title>
+		<link rel="stylesheet" href="/css/normalize.css"/>
+		<link rel="stylesheet" href="/css/main.css"/>
+		<link rel="stylesheet" href="/css/redmond/jquery-ui-1.10.4.custom.min.css"/>
+		<link rel="stylesheet" href="/css/fontello.css">
+		<link rel="stylesheet" href="/css/animation.css">
+		<!--[if IE 7]><link rel="stylesheet" href="/css/fontello-ie7.css"><![endif]-->
+	</head>
+	<body>
+		<div class="wrapper">
+			<%- include ../template/header %>
+			<div class="fix-content">
+				<div class="lb">
+					<%- include ../template/function-tabs %>
+				</div>
+				<div class="rb">
+					<div class="main-wrap">
+						<div id="freeAp" class="main">
+							<div class="hd">
+								<div class="hd-title">
+									<h4 data-i18n="fn.free_ap"></h4>
+								</div>
+							</div>
+							<div class="bd scrollable">
+								<div class="tool-bar">
+									<div class="tool">
+										<a href="javascript:;" class="btn btn_create_free_ap" style="display: none">Start Free AP</a>
+										<a href="javascript:;" class="btn btn_shutdown_ap" style="display: none">Shutdown AP</a>
+									</div>
+								</div>
+								<div class="card m-15">
+									<div class="card-hd">
+										<h4>Connected Client</h4>
+									</div>
+									<div class="card-bd">
+										<table id="client_list" class="non-mw mac-tb">
+											<thead>
+												<tr>
+													<th class="col-1-5">MAC</th>
+													<th class="col-1-5">IP</th>
+													<th class="col-4-10">Account</th>
+													<th class="col-1-5">Sign In Time</th>
+												</tr>
+											</thead>
+											<tbody></tbody>
+										</table>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<%- include ../template/footer %>
+		</div>
+		<script type="text/template" id="tpl_client_row">
+			<tr>
+				<td>{%= hwAddr %}</td>
+				<td>{%= ipAddr %}</td>
+				<td>{%= email %}</td>
+				<td>{%= signin_time == '' ? '' : $.formatDateTime(new Date(parseInt(signin_time, 10)), 'yyyy-MM-dd HH:mm:ss') %}</td>
+			</tr>
+		</script>
+		<%- include ../template/script %>
+	</body>
+</html>

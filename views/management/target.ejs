@@ -1,0 +1,115 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>WiFi Tictical</title>
+		<link rel="stylesheet" href="/css/normalize.css"/>
+		<link rel="stylesheet" href="/css/main.css"/>
+		<link rel="stylesheet" href="/css/redmond/jquery-ui-1.10.4.custom.min.css"/>
+		<link rel="stylesheet" href="/css/fontello.css">
+		<link rel="stylesheet" href="/css/animation.css">
+		<!--[if IE 7]><link rel="stylesheet" href="/css/fontello-ie7.css"><![endif]-->
+	</head>
+	<body>
+		<div class="wrapper">
+			<%- include ../template/header %>
+			<div class="fix-content">
+				<div class="lb">
+					<%- include ../template/function-tabs %>
+				</div>
+				<div class="rb">
+					<div class="main-wrap">
+						<div id="targetManagement" class="main">
+							<div class="hd">
+								<div class="hd-title">
+									<h4>監查目標管理</h4> <h5>列表</h5>
+								</div>
+								<div class="pull-right">
+									<a id="btn_add_target" href="#" class="btn">新增監查目標</a>
+								</div>
+							</div>
+							<div class="bd scrollable">
+								<div class="card m-15">
+									<!-- <div class="card-hd">
+										<h4>監查目標列表</h4>
+										<div class="pull-right">
+											<a id="btn_add_target" href="#" class="btn">新增監查目標</a>
+										</div>
+									</div> -->
+									<div class="card-bd">
+										<table class="tb-grid">
+											<thead>
+												<tr>
+													<th class="col-10-12">監查目標</th>
+													<th class="col-1-6">&nbsp;</th>
+												</tr>
+											</thead>
+											<tbody>
+												<tr>
+													<td>0987654321</td>
+													<td>
+														<a id="delete_1" href="javascript:;" title="刪除監查目標"><i class="icon-trash"></i></a>
+													</td>
+												</tr>
+												<tr>
+													<td>0912345678</td>
+													<td>
+														<a href="javascript:;" title="刪除監查目標"><i class="icon-trash"></i></a>
+													</td>
+												</tr>
+											</tbody>
+										</table>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<%- include ../template/footer %>
+		</div>
+		<script type="text/template" id="dialog_target_form">
+			<div class="dl">
+				<form>
+					<div class="grid grid-pd-top non-mw">
+						<div class="col-1-5">
+							<span class="field-name pull-right">監查目標</span>
+						</div>
+						<div class="col-8-10">
+							<input type="text" />
+						</div>
+					</div>
+					<div class="grid grid-pd-top non-mw">
+						<div class="col-1-2 ta-c">
+							<a href="#" class="btn">取消</a>
+						</div>
+						<div class="col-1-2 ta-c">
+							<a href="#" class="btn btn-ok">新增</a>
+						</div>
+					</div>
+				</form>
+			</div>
+		</script>
+		<script type="text/template" id="dialog_confirm_form">
+			<div class="dl">
+				<div class="grid grid-pd-top non-mw">
+					<div class="col-1-1 ta-c">確定要刪除xxxx？</div>
+				</div>
+					<div class="grid grid-pd-top non-mw">
+						<div class="col-1-2 ta-c">
+							<a href="#" class="btn">取消</a>
+						</div>
+						<div class="col-1-2 ta-c">
+							<a href="#" class="btn btn-ok">確認</a>
+						</div>
+					</div>
+			</div>
+		</script>
+		<!--[if lt IE 9]>       <script type="text/javascript" src="/js/libs/jquery/jquery-1.10.2.js"></script> <![endif]-->
+		<!--[if gte IE 9]><!--> <script type="text/javascript" src="/js/libs/jquery/jquery-2.0.3.js"></script> <!--<![endif]-->
+		<script type="text/javascript" src="/js/libs/jquery/jquery-ui-1.10.4.js"></script>
+		<script type="text/javascript" src="/js/libs/underscore/underscore-min.js"></script>
+		<script type="text/javascript" src="/js/libs/underscore/_config.js"></script>
+		<script type="text/javascript" src="/js/app.js"></script>
+	</body>
+</html>

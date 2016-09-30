@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title data-i18n="app.name"></title>
+		<link rel="stylesheet" href="/css/normalize.css"/>
+		<link rel="stylesheet" href="/css/main.css"/>
+	</head>
+	<body>
+		<div class="wrapper">
+			<header class="non-b"></header>
+			<div class="content">
+				<div class="signin-card">
+					<div class="logo-wrap">
+						<a href="javascript" class="logo">logo</a>
+					</div>
+					<form action="/login" method="post">
+						<input id="account" name="account" type="text"  value="<%= account %>" data-i18n="[placeholder]login.form_label_account" />
+						<input id="passwd" name="passwd" type="password" data-i18n="[placeholder]login.form_label_password" />
+						<% if(typeof errMsg !== 'undefined' && errMsg != '') { %>
+						<span class="err-msg"><%= errMsg %></span>
+						<% } %>
+						<input type="submit" class="btn btn-submit" data-i18n="[value]btn.signin" />
+					</form>
+				</div>
+				<!-- <div id="content-switch">
+					<p>
+						<a href="/signup" data-i18n="login.create_a_act"></a>
+					</p>
+				</div> -->
+			</div>
+			<%- include ../template/footer %>
+		</div>
+		<!--[if lt IE 9]>       <script type="text/javascript" src="/js/libs/jquery/jquery-1.10.2.js"></script> <![endif]-->
+		<!--[if gte IE 9]><!--> <script type="text/javascript" src="/js/libs/jquery/jquery-2.0.3.js"></script> <!--<![endif]-->
+		<script type="text/javascript" src="/js/libs/jquery/plugin/i18next-1.7.7.min.js"></script>
+		<script type="text/javascript">
+		$(document).ready(function() {
+			var options = {
+				detectLngQS: 'lang',
+				cookieName: 'lang',
+				ns: { namespaces: ['translation'], defaultNs: 'translation'},
+				resGetPath: '/locales/resources.json?lng=__lng__&ns=__ns__',
+				dynamicLoad: true,
+				sendMissing: true,
+				useLocalStorage: false,
+				sendMissingTo: 'current'
+			};
+			$.i18n.init(options, function() {
+				$('html').i18n();
+			});
+			$('#account').focus();
+		});
+		</script>
+	</body>
+</html>

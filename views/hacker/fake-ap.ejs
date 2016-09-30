@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title data-i18n="app.name"></title>
+		<link rel="stylesheet" href="/css/normalize.css"/>
+		<link rel="stylesheet" href="/css/main.css"/>
+		<link rel="stylesheet" href="/css/redmond/jquery-ui-1.10.4.custom.min.css"/>
+		<link rel="stylesheet" href="/css/fontello.css">
+		<link rel="stylesheet" href="/css/animation.css">
+		<!--[if IE 7]><link rel="stylesheet" href="/css/fontello-ie7.css"><![endif]-->
+	</head>
+	<body>
+		<div class="wrapper">
+			<%- include ../template/header %>
+			<div class="fix-content">
+				<div class="lb">
+					<%- include ../template/function-tabs %>
+				</div>
+				<div class="rb">
+					<div class="main-wrap">
+						<div id="fakeAp" class="main">
+							<div class="hd">
+								<div class="hd-title">
+									<h4 data-i18n="fn.fake_ap"></h4>
+								</div>
+								<div class="pull-right">
+									
+								</div>
+							</div>
+							<div class="bd">
+								<div class="bd-l scrollable">
+									<div class="card m-15">
+										<div class="card-hd">
+											<h4 data-i18n="fake_ap.node_list_title"></h4>
+											<div style="display: inline-block; margin-left: 10px;">
+												<a href="javascript:;" class="btn btn-scan" data-i18n="btn.scan"></a>
+											</div>
+											<div class="pull-right">
+												<input id="filter" type="text" data-i18n="[placeholder]fake_ap.input_filter" />
+												<a id="btn_filter" href="javascript:;" class="btn btn-icon"><i class="icon-search"></i></a>
+											</div>
+										</div>
+										<div class="card-bd">
+											<table id="network_list" class="non-mw mac-tb">
+												<thead>
+													<tr>
+														<th class="col-4-10" data-i18n="fake_ap.node_list_th_mac"></th>
+														<th class="col-1-5" data-i18n="fake_ap.node_list_th_type"></th>
+														<th class="col-4-10" data-i18n="fake_ap.node_list_th_ap_name"></th>
+													</tr>
+												</thead>
+												<tbody></tbody>
+											</table>
+										</div>
+									</div>
+								</div>
+								<div id="attack_info" class="bd-r scrollable"></div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<%- include ../template/footer %>
+		</div>
+		<script type="text/template" id="tpl_networknode_table_row">
+			<tr>
+				<td>
+					<input type="hidden" value="{%= mac %}" />
+					{%= mac %}{% if(isFakeAP) { %}<span> (Fake)</span>{% } %}{% if(hasConnected) { %}<span data-i18n="fake_ap.node_list_connected"></span>{% } %}
+				</td>
+				<td>{%= type %}</td>
+				<td>{%= name %}</td>
+			</tr>
+		</script>
+		<script type="text/template" id="tpl_dialog_ap_node_detail">
+			<div class="dl">
+				<div class="grid non-mw">
+					<div class="col-1-3">
+						<span class="field-name pull-right" data-i18n="fake_ap.node_name"></span>
+					</div>
+					<div class="col-2-3">
+						<span class="field-value">{%= essid %}</span>
+					</div>
+				</div>
+				<div class="grid non-mw">
+					<div class="col-1-3">
+						<span class="field-name pull-right" data-i18n="fake_ap.node_mac"></span>
+					</div>
+					<div class="col-2-3">
+						<span class="field-value">{%= bssid %}</span>
+					</div>
+				</div>
+				<div class="grid non-mw">
+					<div class="col-1-3">
+						<span class="field-name pull-right" data-i18n="fake_ap.node_channel"></span>
+					</div>
+					<div class="col-2-3">
+						<span class="field-value">{%= channel %}</span>
+					</div>
+				</div>
+				<div class="grid non-mw">
+					<div class="col-1-3">
+						<span class="field-name pull-right" data-i18n="fake_ap.node_authType"></span>
+					</div>
+					<div class="col-2-3">
+						<span class="field-value">{%= authType %}</span>
+					</div>
+				</div>
+				<div class="grid non-mw">
+					<div class="col-1-3">
+						<span class="field-name pull-right" data-i18n="fake_ap.node_client_info"></span>
+					</div>
+					<div class="col-2-3">&nbsp;</div>
+				</div>
+				<div class="grid non-mw">
+					<div class="col-1-3">&nbsp;</div>
+					<div class="col-2-3">
+					{% if(connectedClient.length) { %}
+						<ul class="acc-target-list">
+					{% _.each(connectedClient, function(client) { %}
+						<li>
+							{% if(!isFakeAP) { %}<input type="radio" name="client" value="{%= client %}" />{% } %}<span>{%= client %}</span>
+						</li>
+					{% }) %}
+						</ul>
+					{% } else { %}
+						{% if(!isFakeAP) { %}
+						<span data-i18n="fake_ap.node_msg_no_client"></span>
+						{% } else { %}
+						<span data-i18n="fake_ap.node_msg_fake_ap_no_client"></span>
+						{% } %}
+					{% } %}
+					</div>
+				</div>
+				<div class="grid non-mw">
+					<div class="col-1-1 ta-c" style="margin-top: 8px;">
+					{% if(connectedClient.length && !isFakeAP) { %}
+						<input type="hidden" id="ap" value="{%= bssid %}" />
+						<a id="btn_attack" href="javascript:;" class="btn btn-ok" data-i18n="btn.attack_ap"></a>
+					{% } %}
+					</div>
+				</div>
+			</div>
+		</script>
+		<script type="text/template" id="tpl_dialog_client_node_detail">
+			<div class="dl ">
+				<div class="grid non-mw">
+					<div class="col-1-3">
+						<span class="field-name pull-right" data-i18n="fake_ap.node_mac"></span>
+					</div>
+					<div class="col-2-3">
+						<span class="field-value">{%= client.station %}</span>
+					</div>
+				</div>
+				<div class="grid non-mw">
+					<div class="col-1-3">
+						<span class="field-name pull-right" data-i18n="fake_ap.node_ap_info"></span>
+					</div>
+					<div class="col-2-3">&nbsp;</div>
+				</div>
+				<div class="grid non-mw b-t b-r b-b b-l">
+					<div class="col-1-1">
+						{% if(typeof ap === 'undefined') { %}
+						<div class="grid non-mw">
+							<div class="col-1-3">&nbsp;</div>
+							<div class="col-2-3" data-i18n="fake_ap.node_msg_no_connected"></div>
+						</div>
+						{% } else { %}
+						<div class="grid non-mw">
+							<div class="col-1-3">
+								<span class="field-name pull-right" data-i18n="fake_ap.node_name"></span>
+							</div>
+							<div class="col-2-3">
+								<span class="field-value">{%= ap.essid %}</span>
+							</div>
+						</div>
+						<div class="grid non-mw">
+							<div class="col-1-3">
+								<span class="field-name pull-right" data-i18n="fake_ap.node_mac"></span>
+							</div>
+							<div class="col-2-3">
+								<span class="field-value">{%= ap.bssid %}</span>
+							</div>
+						</div>
+						<div class="grid non-mw">
+							<div class="col-1-3">
+								<span class="field-name pull-right" data-i18n="fake_ap.node_channel"></span>
+							</div>
+							<div class="col-2-3">
+								<span class="field-value">{%= ap.channel %}</span>
+							</div>
+						</div>
+						<div class="grid non-mw">
+							<div class="col-1-3">
+								<span class="field-name pull-right" data-i18n="fake_ap.node_authType"></span>
+							</div>
+							<div class="col-2-3">
+								<span class="field-value">{%= ap.authType %}</span>
+							</div>
+						</div>
+						{% } %}
+					</div>
+				</div>
+				{% if(typeof ap !== 'undefined') { %}
+				<div class="grid non-mw">
+					<div class="col-1-1 ta-c" style="margin-top: 8px;">
+						{% if(ap.isFakeAP) { %}
+						<span data-i18n="fake_ap.node_msg_connected"></span>
+						{% } else { %}
+						<input type="hidden" id="ap" value="{%= ap.bssid %}" />
+						<input type="hidden" id="client" value="{%= client.station %}" />
+						<a id="btn_attack" href="javascript:;" class="btn btn-ok" data-i18n="btn.attack_ap"></a>
+						{% } %}
+					</div>
+				</div>
+				{% } %}
+			</div>
+		</script>
+		<script type="text/template" id="tpl_attack_info">
+			<div class="card m-15">
+				<div class="card-hd">
+					<h4 data-i18n="fake_ap.attack_card_title"></h4>
+					<div class="pull-right">
+						<a href="javascript:;" class="btn btn-unattack" data-i18n="btn.unattack_ap"></a>
+					</div>
+				</div>
+				<div class="card-bd" style="background: #D3DADC;">
+					<div class="card m-15">
+						<div class="card-hd">
+							<h4 data-i18n="fake_ap.attack_card_title_client"></h4>
+						</div>
+						<div class="card-bd">
+							<div class="grid non-mw">
+								<div class="col-1-5">
+									<span class="field-name pull-right" data-i18n="fake_ap.node_mac"></span>
+								</div>
+								<div class="col-8-10">
+									<span class="field-value">{%= client.station %}</span>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="card m-15">
+						<div class="card-hd">
+							<h4 data-i18n="fake_ap.attack_card_title_ap"></h4>
+						</div>
+						<div class="card-bd">
+							<div class="grid non-mw">
+								<div class="col-1-5">
+									<span class="field-name pull-right" data-i18n="fake_ap.node_name"></span>
+								</div>
+								<div class="col-8-10">
+									<span class="field-value">{%= ap.essid %}</span>
+								</div>
+							</div>
+							<div class="grid non-mw">
+								<div class="col-1-5">
+									<span class="field-name pull-right" data-i18n="fake_ap.node_mac"></span>
+								</div>
+								<div class="col-8-10">
+									<span class="field-value">{%= ap.bssid %}</span>
+								</div>
+							</div>
+							<div class="grid non-mw">
+								<div class="col-1-5">
+									<span class="field-name pull-right" data-i18n="fake_ap.node_channel"></span>
+								</div>
+								<div class="col-8-10">
+									<span class="field-value">{%= ap.channel %}</span>
+								</div>
+							</div>
+							<div class="grid non-mw">
+								<div class="col-1-5">
+									<span class="field-name pull-right" data-i18n="fake_ap.node_authType"></span>
+								</div>
+								<div class="col-8-10">
+									<span class="field-value">{%= ap.authType %}</span>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="card m-15">
+						<div class="card-hd">
+							<h4 data-i18n="fake_ap.attack_card_title_info"></h4>
+						</div>
+						<div id="status_info" class="card-bd"></div>
+					</div>
+				</div>
+			</div>
+		</script>
+		<script type="text/template" id="tpl_status_info_item">
+			<div class="grid non-mw">
+				<div class="col-1-5">
+					{% var classStr = ''; if(task.done == 1) {classStr = 'icon-ok i-green'} else if(task.done == 0 && !!task.errmsg) {classStr = 'icon-cancel i-red'} else {classStr = 'icon-spin5 animate-spin'} %}
+					<span class="field-name pull-right"><i class="{%= classStr %}"></i></span>
+				</div>
+				<div class="col-8-10">
+					<span class="field-value">{%= msg %}</span>
+				</div>
+			</div>
+		</script>
+		<%- include ../template/script %>
+	</body>
+</html>

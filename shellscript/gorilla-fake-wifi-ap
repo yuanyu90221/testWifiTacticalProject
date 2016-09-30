@@ -1,0 +1,36 @@
+#!/bin/sh
+PROJECT=Fake_WiFi_AP
+
+ROOTPATH=/root/$PROJECT
+DEAMON=$ROOTPATH/app.js
+
+LOGPATH=/root/logs
+ACCESS=$LOGPATH/$PROJECT/access.log
+OUT=$LOGPATH/$PROJECT/out.log
+ERROR=$LOGPATH/$PROJECT/error.log
+
+PID=/root/.forever/pids/forever.pid
+
+export PATH=$PATH:/root/.nvm/v0.10.34/bin
+export NODE_PATH=$NODE_PATH:/root/.nvm/v0.10.34/lib/node_modules
+
+node=/root/.nvm/v0.10.34/bin/node
+forever=/root/.nvm/v0.10.34/bin/forever
+
+case "$1" in
+	start)
+		$forever -m 5 --minUptime 1000 --spinSleepTime 1000 -l $ACCESS -o $OUT -e $ERROR -a --pidFile $PID start $DEAMON
+		;;
+	stop)
+		$forever stop $DEAMON
+		;;
+	restart|reload)
+		$forever -l $ACCESS -o $OUT -e $ERROR -a --pidFile $PID restart $DEAMON
+		;;
+	*)
+		echo "Usage: /etc.init.d/gorilla-fake-yahoo {start|stop|restart|reload}"
+		exit 1
+		;;
+esac
+
+exit 0

@@ -1,0 +1,6 @@
+<footer>
+	<div class="footer-wrap">
+		<span class="copyright" data-i18n="tpl.footer.copyright"></span>
+		<span class="version">v1.0.1</span>
+	</div>
+</footer>

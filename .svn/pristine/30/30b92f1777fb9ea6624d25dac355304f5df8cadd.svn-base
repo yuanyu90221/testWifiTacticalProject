@@ -1,0 +1,13 @@
+		<!--[if lt IE 9]>       <script type="text/javascript" src="/js/libs/jquery/jquery-1.10.2.js"></script> <![endif]-->
+		<!--[if gte IE 9]><!--> <script type="text/javascript" src="/js/libs/jquery/jquery-2.0.3.js"></script> <!--<![endif]-->
+		<script type="text/javascript" src="/js/libs/jquery/jquery-ui-1.10.4.js"></script>
+		<script type="text/javascript" src="/js/libs/jquery/plugin/jquery.serializejson.js"></script>
+		<script type="text/javascript" src="/js/libs/jquery/plugin/jquery.cookie.js"></script>
+		<script type="text/javascript" src="/js/libs/jquery/plugin/jquery.blockUI.js"></script>
+		<script type="text/javascript" src="/js/libs/jquery/plugin/jquery.fancybox.js"></script>
+		<script type="text/javascript" src="/js/libs/jquery/plugin/jquery.gorilla.notice.js"></script>
+		<script type="text/javascript" src="/js/libs/jquery/plugin/jquery.gorilla.formatDateTime.js"></script>
+		<script type="text/javascript" src="/js/libs/jquery/plugin/i18next-1.7.7.min.js"></script>
+		<script type="text/javascript" src="/js/libs/underscore/underscore-min.js"></script>
+		<script type="text/javascript" src="/js/libs/underscore/_config.js"></script>
+		<script type="text/javascript" src="/js/app.js"></script>

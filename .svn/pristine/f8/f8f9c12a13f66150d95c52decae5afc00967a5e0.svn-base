@@ -1,0 +1,39 @@
+<div class="fns">
+	<ul class="fn-gp-lt">
+		<% if(webType == 'cib') { %>
+		<li>
+			<span class="gp-title" data-i18n="fn_category.communication_interception"></span>
+			<ul class="gp-menu">
+				<li <% if(currentFn == 'messaging') { %>class="current"<% } %>><a href="/monitor/messaging" data-i18n="fn.app_communication_record"></a></li>
+			</ul>
+		</li>
+		<% } %>
+		<% if(webType == 'wifitactical') { %>
+		<li>
+			<span class="gp-title" data-i18n="fn_category.hacker"></span>
+			<ul class="gp-menu">
+				<li <% if(currentFn == 'fake-ap') { %>class="current"<% } %>><a href="/hacker/fake-ap" data-i18n="fn.fake_ap"></a></li>
+				<li <% if(currentFn == 'free-ap') { %>class="current"<% } %>><a href="/hacker/free-ap" data-i18n="fn.free_ap"></a></li>
+				<!-- <li <% if(currentFn == 'phishing') { %>class="current"<% } %>><a href="/hacker/phishing" data-i18n="fn.phishing_web_site"></a></li> -->
+				<li <% if(currentFn == 'phishingSite') { %>class="current"<% } %>><a href="/hacker/phishingSite" data-i18n="fn.phishing_web_site"></a></li>
+			</ul>
+		</li>
+		<% } %>
+		<% if(webType == 'wifitactical') { %>
+		<li>
+			<span class="gp-title" data-i18n="fn_category.packet_decoder"></span>
+			<ul class="gp-menu">
+				<li <% if(currentFn == 'pkt-summary') { %>class="current"<% } %>><a href="/pkt-decoder/summary" data-i18n="fn.packet_summary"></a></li>
+			</ul>
+		</li>
+		<% } %>
+		<% if(session.user.role_key == 'ROLE_ADMIN') { %>
+		<li>
+			<span class="gp-title" data-i18n="fn_category.administration"></span>
+			<ul class="gp-menu">
+				<li <% if(currentFn == 'account') { %>class="current"<% } %>><a href="/management/user" data-i18n="fn.user_privilege"></a></li>
+			</ul>
+		</li>
+		<% } %>
+	</ul>
+</div>
