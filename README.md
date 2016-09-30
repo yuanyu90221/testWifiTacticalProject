@@ -1,2 +1,0 @@
-# testWifiTacticalProject
-private project
